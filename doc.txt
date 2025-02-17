@@ -1,0 +1,11 @@
+Nhóm nên phát triển một ứng dụng hiển thị thông tin tóm tắt sau:
+1) Tổng thu nhập theo cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước, theo phòng ban
+2) Tổng số ngày nghỉ phép của cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước
+3) Lợi ích trung bình được trả cho cổ đông và người không phải cổ đông cho đến nay theo kế hoạch phúc lợi
+Ngoài ra, ban quản lý muốn có thể thiết lập cảnh báo khi các điều kiện sau xảy ra:
+1) Một nhân viên còn trong một số ngày nhất định kể từ ngày kỷ niệm tuyển dụng của họ
+2) Một nhân viên đã tích lũy được hơn một số ngày nghỉ phép nhất định
+3) Nhân viên thực hiện thay đổi đối với kế hoạch phúc lợi của họ ảnh hưởng đến bảng lương của họ
+4) Tất cả nhân viên có ngày sinh nhật trong tháng hiện tại
+Tôi chắc chắn rằng chúng tôi sẽ có thêm nhu cầu thông tin trong tương lai, nhưng điều này sẽ giải quyết được những nhu cầu cấp thiết nhất của chúng tôi. Ngoài thông tin tóm tắt, các nhà quản lý cấp cao phải có khả năng "đi sâu" vào
+thông tin tóm tắt để xem thông tin cụ thể.
