@@ -1,0 +1,8 @@
+import { ObjectId } from 'mongodb';
+
+export interface PayrollSchema {
+  employeeId: ObjectId;
+  earnings: number;
+  department: string;
+  year?: number;
+}

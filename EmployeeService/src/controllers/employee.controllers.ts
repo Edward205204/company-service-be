@@ -1,5 +1,4 @@
-import e, { Request, Response } from 'express';
-import { omit } from 'lodash';
+import { Request, Response } from 'express';
 import employeeService from '~/services/employee.services';
 
 class EmployeeController {
