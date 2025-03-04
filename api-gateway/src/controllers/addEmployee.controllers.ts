@@ -13,7 +13,7 @@ class EmployeeController {
       earnings: employee.earnings,
       department: employee.department
     });
-    res.status(200).json({ ...empRes, ...payrollRes });
+    res.status(200).json({ ...empRes, ...payrollRes, _id: empRes._id });
   }
 }
 

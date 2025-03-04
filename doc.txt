@@ -1,11 +1,33 @@
 Nhóm nên phát triển một ứng dụng hiển thị thông tin tóm tắt sau:
-1) Tổng thu nhập theo cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước, theo phòng ban
-2) Tổng số ngày nghỉ phép của cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước
-3) Lợi ích trung bình được trả cho cổ đông và người không phải cổ đông cho đến nay theo kế hoạch phúc lợi
+1 Tổng thu nhập theo cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước, theo phòng ban
+2 Tổng số ngày nghỉ phép của cổ đông, giới tính, dân tộc, nhân viên bán thời gian và toàn thời gian cho đến nay và năm trước
+3 Lợi ích trung bình được trả cho cổ đông và người không phải cổ đông cho đến nay theo kế hoạch phúc lợi
 Ngoài ra, ban quản lý muốn có thể thiết lập cảnh báo khi các điều kiện sau xảy ra:
-1) Một nhân viên còn trong một số ngày nhất định kể từ ngày kỷ niệm tuyển dụng của họ
-2) Một nhân viên đã tích lũy được hơn một số ngày nghỉ phép nhất định
-3) Nhân viên thực hiện thay đổi đối với kế hoạch phúc lợi của họ ảnh hưởng đến bảng lương của họ
-4) Tất cả nhân viên có ngày sinh nhật trong tháng hiện tại
+  1 Một nhân viên còn trong một số ngày nhất định kể từ ngày kỷ niệm tuyển dụng của họ
+  2 Một nhân viên đã tích lũy được hơn một số ngày nghỉ phép nhất định
+  3 Nhân viên thực hiện thay đổi đối với kế hoạch phúc lợi của họ ảnh hưởng đến bảng lương của họ
+  4 Tất cả nhân viên có ngày sinh nhật trong tháng hiện tại
 Tôi chắc chắn rằng chúng tôi sẽ có thêm nhu cầu thông tin trong tương lai, nhưng điều này sẽ giải quyết được những nhu cầu cấp thiết nhất của chúng tôi. Ngoài thông tin tóm tắt, các nhà quản lý cấp cao phải có khả năng "đi sâu" vào
 thông tin tóm tắt để xem thông tin cụ thể.
+
+---------------------------------------------------------------------------------------------------------------
+
+Đầu tiên là thêm một nhân viên mới vào hệ thống(khi nhân viên đó mới nhận vào làm):
+Gọi api đến api gateway -> http://localhost:4000/api  bằng phương thức post
+Body của phương thức post
+{
+  "name": "Newbie",                       | tên nhân viên
+  "gender": "male",                       | giới tính
+  "ethnicity": "Kinh",                    | dân tộc
+  "department": "HR",                     | bộ phận
+  "employmentType": "part-time",          | loại nhân viên (full time và part time)
+  "hireDate": "2020-05-15T08:30:00.000Z", | ngày vào làm
+  "birthday": "1992-08-10T00:00:00.000Z", | ngày sinh nhật
+  "vacationDaysAccumulated": 20,          | ngày nghỉ cho phép
+  "vacationDaysTaken": 5,                 | ngày nghỉ đã thực hiện
+  "benefitPlan": "Premium Health Plan",   | phúc lợi
+  "earnings": 3000                        | tiền lương
+}
+-> Không truyền year vào vì sẽ lấy năm của hiện tại.
+
+Tiếp theo cần thực hiện xóa nhân viên khi nhân viên đó nghĩ việc 
