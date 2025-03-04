@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { EmployeeSchema } from '~/models/schemas/employeesGW.schema';
 import { PayrollSchema } from '~/models/schemas/payrollsGW.schemas';
-import { addNewEmployee, getEmployees, getEmployeeById } from '~/utils/employees.axios';
+import { addNewEmployee, getEmployees, getEmployeeById, getEmployeesByDepartment } from '~/utils/employees.axios';
 import { addPayroll, getPayrolls, getPayrollById } from '~/utils/payroll.axios';
 
 class EmployeeController {
@@ -31,12 +31,17 @@ class EmployeeController {
     res.json(employeesWithPayrolls);
   }
 
-  async getEmployeeByIdAndPayrollById(req: Request, res: Response) {
+  async getEmployeeAndPayrollById(req: Request, res: Response) {
     const { id, year } = req.params;
     const employee: EmployeeSchema = await getEmployeeById(id);
     const payroll: PayrollSchema = await getPayrollById(id, year);
-    console.log(payroll);
     res.json({ ...employee, earnings: payroll.earnings, year: payroll.year });
+  }
+
+  async getEmployeesAndPayrollsByDepartment(req: Request, res: Response) {
+    const { department, year } = req.params;
+    const employees: EmployeeSchema[] = await getEmployeesByDepartment(department);
+    res.json(employees);
   }
 }
 

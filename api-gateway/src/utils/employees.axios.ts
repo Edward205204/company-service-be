@@ -16,3 +16,8 @@ export const getEmployeeById = async (id: string) => {
   const response = await axios.get(`${path.employees}/employees/${id}`);
   return response.data;
 };
+
+export const getEmployeesByDepartment = async (department: string) => {
+  const response = await axios.get(`${path.employees}/employees/department/${department}`);
+  return response.data;
+};
