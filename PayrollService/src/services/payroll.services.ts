@@ -4,19 +4,26 @@ import databaseService from '~/services/databases.services';
 import Payroll, { PayrollInterface } from '~/models/schemas/payroll.schema';
 
 class PayrollService {
-  async getPayrollsByEmployeeId(employeeId: string, year: number): Promise<number | string> {
-    // return await databaseService.payrolls.find({ employeeId: new ObjectId(employeeId) }).toArray();
+  async getAllPayrolls(): Promise<PayrollInterface[]> {
+    const payrolls = await databaseService.payrolls.find().toArray();
+    return payrolls;
+  }
+
+  async getPayrollsByEmployeeId(employeeId: string, year: number): Promise<PayrollInterface | string> {
     const payroll = await databaseService.payrolls.findOne({
-      employeeId: new ObjectId(employeeId),
+      employeeId: employeeId,
       year: year
     });
 
-    return payroll?.earnings || 'No payroll found';
+    return payroll || 'No payroll found';
   }
 
   async createPayroll(data: PayrollInterface): Promise<PayrollInterface> {
     const payroll = new Payroll(data);
-    const result = await databaseService.payrolls.insertOne(payroll);
+    const result = await databaseService.payrolls.insertOne({
+      ...payroll,
+      department: payroll.department.toLowerCase()
+    });
     payroll._id = result.insertedId;
     return payroll;
   }

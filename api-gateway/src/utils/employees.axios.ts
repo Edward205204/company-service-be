@@ -1,15 +1,18 @@
 import axios from 'axios';
 import { path } from '~/constants/path';
 import { EmployeeSchema } from '~/models/schemas/employeesGW.schema';
-import { PayrollSchema } from '~/models/schemas/payrollsGW.schemas';
 
-// endpoint của thêm nhân viên mới http://localhost:3000/employees
+export const getEmployees = async () => {
+  const response = await axios.get(`${path.employees}/employees`);
+  return response.data;
+};
+
 export const addNewEmployee = async (data: EmployeeSchema) => {
   const response = await axios.post(`${path.employees}/employees`, data);
   return response.data;
 };
 
-export const addPayroll = async (data: PayrollSchema) => {
-  const response = await axios.post(`${path.payroll}/payrolls`, data);
+export const getEmployeeById = async (id: string) => {
+  const response = await axios.get(`${path.employees}/employees/${id}`);
   return response.data;
 };

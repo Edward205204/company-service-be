@@ -12,7 +12,46 @@ thông tin tóm tắt để xem thông tin cụ thể.
 
 ---------------------------------------------------------------------------------------------------------------
 
-Đầu tiên là thêm một nhân viên mới vào hệ thống(khi nhân viên đó mới nhận vào làm):
+Yêu cầu:
+  Our company has two separate systems for managing our Human Resources Department and our Payroll
+department. Every time I ask for information about our employees, it takes both departments a
+significant amount of time to gather the information that I need. In addition, our shareholders often ask
+for information about our employees and both departments have to stop their work to gather the
+information to answer their questions. It seems very inefficient to me and I feel limited in the kinds of
+information that I can ask for. Therefore, I am not able to make timely management decisions.
+Another problem that my management team faces is that we often discover a problem before it is too
+late. Ideally, we would like the systems to let us know when certain conditions exist or special events
+take place, such as employment anniversaries. Neither system provides us with the ability to manage by
+exception.
+Our company is growing very quickly so our need to provide timely information to our senior managers
+is becoming critical. We would like your team to develop a dashboard that can be used by senior
+managers to show summary information about our employees and their payroll and benefits
+information. Although we are considering changing to a different financial system or Human Resource
+Management system, we would like to explore the possibility of continuing with our existing systems for
+a while longer.
+The team should develop an application that shows the following summarized information:
+1) The total earnings by shareholder, gender, ethnicity, part-time, and full- time employee to
+date and the previous year, by department
+
+2) Total number of vacation days taken by shareholder, gender, ethnicity, part-time, and full-
+time employee to date and the previous year
+
+3) Average benefits paid to shareholders and non-shareholders to date by benefits plan
+In addition, management would like to be able to set alerts when the following conditions occur:
+1) An employee is within a certain number of days of their hiring anniversary
+2) An employee has accumulated more than a certain number of days of vacation
+3) Employees make a change to their benefits plan that affects their payroll
+4) All employees who have birthdays within the current month
+I am sure that we will have more information needs in the future, but this will address our most pressing
+needs. In addition to the summary information, senior managers must be able to “drill down” into the
+summary information to see specifics. The dashboard should have that capability to see the details
+behind the summary. Please provide a plan to accomplish the work. It would also be helpful to see some
+drafts of the interface so that we can make sure the team is on track with our needs.
+
+---------------------------------------------------------------------------------------------------------------
+Đã làm:
+
+- Đầu tiên là thêm một nhân viên mới vào hệ thống(khi nhân viên đó mới nhận vào làm):
 Gọi api đến api gateway -> http://localhost:4000/api  bằng phương thức post
 Body của phương thức post
 {
@@ -30,4 +69,18 @@ Body của phương thức post
 }
 -> Không truyền year vào vì sẽ lấy năm của hiện tại.
 
-Tiếp theo cần thực hiện xóa nhân viên khi nhân viên đó nghĩ việc 
+- Tiếp theo xây dựng api trả dữ liệu theo phòng ban:
+
+------------------------------------------------------------
+employee
+router.get('/', employeeController.getAllEmployees);
+router.get('/department/:department', employeeController.getEmployeesByDepartment);
+router.get('/:id', employeeController.getEmployeeById);
+router.post('/', employeeController.createEmployee);
+router.put('/:id', employeeController.updateEmployee);
+
+
+payroll
+router.post('/', payrollController.createPayroll);
+router.get('/getPayrollsByEmployeeId/:employeeId/:year', payrollController.getPayrollsByEmployeeId);
+router.get('/getDepartmentEarnings/:department/:year', payrollController.getDepartmentEarnings);

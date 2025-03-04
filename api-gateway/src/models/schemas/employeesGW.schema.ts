@@ -1,4 +1,7 @@
+import { ObjectId } from 'mongodb';
+
 export interface EmployeeSchema {
+  _id?: ObjectId;
   name: string;
   gender: string;
   ethnicity: string;

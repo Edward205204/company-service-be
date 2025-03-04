@@ -26,10 +26,6 @@ class EmployeeController {
 
   async createEmployee(req: Request, res: Response) {
     const employee = await employeeService.createEmployee(req.body);
-    // const { employee: temp } = req.body;
-    // const newEmployee = { ...temp, department: temp.department.toLowerCase() };
-    // const employee = await employeeService.createEmployee(omit(newEmployee, '_id'));
-    // console.log(employee);
     res.status(201).json(employee);
   }
 

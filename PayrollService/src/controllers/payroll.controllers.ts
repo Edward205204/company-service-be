@@ -3,9 +3,17 @@ import { Request, Response } from 'express';
 import payrollService from '~/services/payroll.services';
 
 class PayrollController {
+  async getALlPayrolls(req: Request, res: Response) {
+    const payrolls = await payrollService.getAllPayrolls();
+    res.json(payrolls);
+  }
+
   async getPayrollsByEmployeeId(req: Request, res: Response) {
-    const { employeeId, year } = req.params;
-    const payrolls = await payrollService.getPayrollsByEmployeeId(employeeId, parseInt(year));
+    const { employeeId: tempId, year: tempYear } = req.params;
+    const year = parseInt(tempYear.slice(1));
+    const employeeId = tempId.slice(1);
+    console.log(employeeId, year);
+    const payrolls = await payrollService.getPayrollsByEmployeeId(employeeId, year);
     res.json(payrolls);
   }
 

@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 
 export interface PayrollInterface {
   _id?: ObjectId;
-  employeeId: ObjectId;
+  employeeId: string;
   earnings: number;
   department: string;
   year?: number;
@@ -10,7 +10,7 @@ export interface PayrollInterface {
 
 export default class Payroll {
   _id?: ObjectId;
-  employeeId: ObjectId;
+  employeeId: string;
   earnings: number;
   department: string;
   year?: number;

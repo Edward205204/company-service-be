@@ -4,7 +4,7 @@ const app = express();
 const PORT = 4000;
 
 app.use(express.json());
-app.use('/api', apiRoutes);
+app.use('/', apiRoutes);
 
 app.listen(PORT, () => {
   console.log(`API Gateway is running on port ${PORT}`);

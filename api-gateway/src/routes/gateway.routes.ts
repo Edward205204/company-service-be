@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import EmployeeController from '~/controllers/addEmployee.controllers';
+import EmployeeController from '~/controllers/employees.controllers';
 
 const router = Router();
 
 router.post('/', EmployeeController.createEmployee);
-
+router.get('/', EmployeeController.getEmployee);
+router.get('/:id/:year', EmployeeController.getEmployeeByIdAndPayrollById);
 export default router;
