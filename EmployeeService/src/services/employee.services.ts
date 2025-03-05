@@ -25,7 +25,6 @@ class EmployeeService {
 
   async updateEmployee(id: string, data: Partial<Employee>): Promise<Employee | null> {
     const employee = await databaseService.employees.findOne({ _id: new ObjectId(id.slice(1)) });
-    console.log(employee);
     const updateEmp = { ...employee, ...data };
     const result = await databaseService.employees.updateOne({ _id: new ObjectId(id.slice(1)) }, { $set: data });
     if (result.matchedCount === 0) return null;

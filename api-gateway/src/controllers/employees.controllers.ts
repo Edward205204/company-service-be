@@ -2,7 +2,13 @@ import { Request, Response } from 'express';
 import { EmployeeSchema } from '~/models/schemas/employeesGW.schema';
 import { PayrollSchema } from '~/models/schemas/payrollsGW.schemas';
 import { addNewEmployee, getEmployees, getEmployeeById, getEmployeesByDepartment } from '~/utils/employees.axios';
-import { addPayroll, getPayrolls, getPayrollById } from '~/utils/payroll.axios';
+import {
+  addPayroll,
+  getPayrolls,
+  getPayrollById,
+  getPayrollByDepartment,
+  getTotalPayrollsByDepartment
+} from '~/utils/payroll.axios';
 
 class EmployeeController {
   async createEmployee(req: Request, res: Response) {
@@ -39,9 +45,24 @@ class EmployeeController {
   }
 
   async getEmployeesAndPayrollsByDepartment(req: Request, res: Response) {
-    const { department, year } = req.params;
+    const { department: tempDepartment, year } = req.params;
+    const department = tempDepartment.toLowerCase();
     const employees: EmployeeSchema[] = await getEmployeesByDepartment(department);
-    res.json(employees);
+    const payrolls: PayrollSchema[] = await getPayrollByDepartment(department, year);
+    const employeesWithPayrolls = [];
+
+    for (const employee of employees) {
+      const payroll = payrolls.find((p) => p.employeeId === employee._id);
+      if (payroll) employeesWithPayrolls.push({ ...employee, earnings: payroll.earnings, year: payroll.year });
+    }
+    res.json(employeesWithPayrolls);
+  }
+
+  async getTotalEarningByDepartment(req: Request, res: Response) {
+    const { department: tempDepartment, year } = req.params;
+    const department = tempDepartment.toLowerCase();
+    const payroll = await getTotalPayrollsByDepartment(department, year);
+    res.json({ department: department, year: year, totalEarnings: payroll.totalEarnings });
   }
 }
 

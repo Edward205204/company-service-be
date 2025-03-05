@@ -1,5 +1,4 @@
 // payroll-service/src/services/payrollService.ts
-import { ObjectId } from 'mongodb';
 import databaseService from '~/services/databases.services';
 import Payroll, { PayrollInterface } from '~/models/schemas/payroll.schema';
 
@@ -28,6 +27,11 @@ class PayrollService {
     return payroll;
   }
 
+  async getEaringByDepartment(department: string, year: number): Promise<PayrollInterface[]> {
+    const payrolls = await databaseService.payrolls.find({ department, year }).toArray();
+    return payrolls;
+  }
+
   async getTotalEarningByDepartment(department: string, year: number): Promise<number> {
     const total = await databaseService.payrolls
       .aggregate([
@@ -42,6 +46,7 @@ class PayrollService {
         }
       ])
       .toArray();
+    console.log(total);
     return total.length > 0 ? total[0].totalEarnings : 0;
   }
 }

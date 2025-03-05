@@ -1,5 +1,6 @@
 // payroll-service/src/controllers/payrollController.ts
 import { Request, Response } from 'express';
+import { PayrollInterface } from '~/models/schemas/payroll.schema';
 import payrollService from '~/services/payroll.services';
 
 class PayrollController {
@@ -27,8 +28,17 @@ class PayrollController {
     const department = tempDepartment.slice(1);
     const year = parseInt(tempYear.slice(1));
     const totalEarnings = await payrollService.getTotalEarningByDepartment(department, year);
-    console.log(totalEarnings);
+
     res.json({ department, year, totalEarnings });
+  }
+
+  async getEarningsByDepartment(req: Request, res: Response) {
+    const { department: tempDepartment, year: tempYear } = req.params;
+    const department = tempDepartment.slice(1);
+    const year = parseInt(tempYear.slice(1));
+    const earningList: PayrollInterface[] = await payrollService.getEaringByDepartment(department, year);
+
+    res.json(earningList);
   }
 }
 

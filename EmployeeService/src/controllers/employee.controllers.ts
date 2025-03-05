@@ -10,7 +10,6 @@ class EmployeeController {
   async getEmployeesByDepartment(req: Request, res: Response) {
     let { department } = req.params;
     department = department.slice(1);
-    console.log(department);
     const employees = await employeeService.getEmployeesByDepartment(department);
     res.json(employees);
   }
