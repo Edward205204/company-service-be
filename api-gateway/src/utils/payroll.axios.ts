@@ -17,3 +17,8 @@ export const getPayrollById = async (id: string, year: string) => {
   // http://localhost:3001/payrolls/:67c6caa90e1a802f5fff8088/:2025
   return response.data;
 };
+
+export const getTotalPayrollsByDepartment = async (department: string, year: string) => {
+  const response = await axios.get(`${path.payroll}/payrolls/total-department-earning/${department}/${year}`);
+  return response.data;
+};

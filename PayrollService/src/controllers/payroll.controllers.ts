@@ -22,9 +22,12 @@ class PayrollController {
     res.status(201).json(payroll);
   }
 
-  async getDepartmentEarnings(req: Request, res: Response) {
-    const { department, year } = req.params;
-    const totalEarnings = await payrollService.getDepartmentEarnings(department, parseInt(year));
+  async getTotalEarningByDepartment(req: Request, res: Response) {
+    const { department: tempDepartment, year: tempYear } = req.params;
+    const department = tempDepartment.slice(1);
+    const year = parseInt(tempYear.slice(1));
+    const totalEarnings = await payrollService.getTotalEarningByDepartment(department, year);
+    console.log(totalEarnings);
     res.json({ department, year, totalEarnings });
   }
 }

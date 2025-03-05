@@ -28,7 +28,7 @@ class PayrollService {
     return payroll;
   }
 
-  async getDepartmentEarnings(department: string, year: number): Promise<number> {
+  async getTotalEarningByDepartment(department: string, year: number): Promise<number> {
     const total = await databaseService.payrolls
       .aggregate([
         {
@@ -42,7 +42,6 @@ class PayrollService {
         }
       ])
       .toArray();
-
     return total.length > 0 ? total[0].totalEarnings : 0;
   }
 }
