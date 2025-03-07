@@ -8,13 +8,13 @@ class EmployeeController {
   }
 
   async getEmployeesByDepartment(req: Request, res: Response) {
-    let { department } = req.params;
-    department = department.slice(1);
+    const { department } = req.params;
     const employees = await employeeService.getEmployeesByDepartment(department);
     res.json(employees);
   }
 
   async getEmployeeById(req: Request, res: Response) {
+    console.log(req.params.id);
     const employee = await employeeService.getEmployeeById(req.params.id);
     if (!employee) {
       res.status(404).json({ message: 'Employee not found' });
@@ -28,6 +28,11 @@ class EmployeeController {
     res.status(201).json(employee);
   }
 
+  async getDepartmentList(req: Request, res: Response) {
+    const departments = await employeeService.getDepartmentList();
+    res.json(departments);
+  }
+
   async updateEmployee(req: Request, res: Response) {
     const employee = await employeeService.updateEmployee(req.params.id, req.body);
     if (!employee) {
@@ -35,6 +40,13 @@ class EmployeeController {
       return;
     }
     res.json(employee);
+  }
+
+  async getEmployeeByEthnicity(req: Request, res: Response) {
+    const { ethnicity } = req.params;
+
+    const employees = await employeeService.getEmployeeByEthnicity(ethnicity);
+    res.json(employees);
   }
 }
 

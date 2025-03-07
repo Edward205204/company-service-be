@@ -21,3 +21,8 @@ export const getEmployeesByDepartment = async (department: string) => {
   const response = await axios.get(`${path.employees}/employees/department/${department}`);
   return response.data;
 };
+
+export const getDepartmentList = async () => {
+  const response = await axios.get(`${path.payroll}/employees/department-list`);
+  return response.data;
+};

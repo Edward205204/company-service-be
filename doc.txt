@@ -49,29 +49,7 @@ behind the summary. Please provide a plan to accomplish the work. It would also 
 drafts of the interface so that we can make sure the team is on track with our needs.
 
 ---------------------------------------------------------------------------------------------------------------
-Đã làm:
 
-- Đầu tiên là thêm một nhân viên mới vào hệ thống(khi nhân viên đó mới nhận vào làm):
-Gọi api đến api gateway -> http://localhost:4000/api  bằng phương thức post
-Body của phương thức post
-{
-  "name": "Newbie",                       | tên nhân viên
-  "gender": "male",                       | giới tính
-  "ethnicity": "Kinh",                    | dân tộc
-  "department": "HR",                     | bộ phận
-  "employmentType": "part-time",          | loại nhân viên (full time và part time)
-  "hireDate": "2020-05-15T08:30:00.000Z", | ngày vào làm
-  "birthday": "1992-08-10T00:00:00.000Z", | ngày sinh nhật
-  "vacationDaysAccumulated": 20,          | ngày nghỉ cho phép
-  "vacationDaysTaken": 5,                 | ngày nghỉ đã thực hiện
-  "benefitPlan": "Premium Health Plan",   | phúc lợi
-  "earnings": 3000                        | tiền lương
-}
--> Không truyền year vào vì sẽ lấy năm của hiện tại.
-
-- Tiếp theo xây dựng api trả dữ liệu theo phòng ban:
-
-------------------------------------------------------------
 employee
 router.get('/', employeeController.getAllEmployees);
 router.get('/department/:department', employeeController.getEmployeesByDepartment);
@@ -79,8 +57,66 @@ router.get('/:id', employeeController.getEmployeeById);
 router.post('/', employeeController.createEmployee);
 router.put('/:id', employeeController.updateEmployee);
 
+employee: có thể lấy dữ liệu của toàn bộ employee
+          có thể lấy dữ liệu toàn bộ emp thuộc một phòng ban nhất định
+          có thể lấy dữ liệu 1 emp bằng id 
+          có thể thêm mới một nhân viên
+          có thể sửa đổi thông tin một nhân viên()
+
+---
 
 payroll
+router.get('/', payrollController.getALlPayrolls);
 router.post('/', payrollController.createPayroll);
-router.get('/getPayrollsByEmployeeId/:employeeId/:year', payrollController.getPayrollsByEmployeeId);
-router.get('/getDepartmentEarnings/:department/:year', payrollController.getDepartmentEarnings);
+router.get('/:employeeId/:year', payrollController.getPayrollsByEmployeeId);
+router.get('/department/:department/:year', payrollController.getEarningsByDepartment);
+router.get('/total-department-earning/:department/:year', payrollController.getTotalEarningByDepartment);
+
+router: có thể lấy toàn bộ earning
+        có thể thêm mới một earning 
+        có thể lấy 1 earning thông qua id và year - nếu ko có year thì year sẽ được lấy năm hiện tại
+        có thể lấy toàn bộ earning thuộc 1 phòng ban 
+        lấy tổng earning của một phòng ban nhất 
+
+---
+gateway
+router.post('/', EmployeeController.createEmployee);
+router.get('/', EmployeeController.getEmployee);
+router.get('/:id/:year', EmployeeController.getEmployeeAndPayrollById);
+router.get('/get-by-department/:department/:year', EmployeeController.getEmployeesAndPayrollsByDepartment);
+router.get('/get-total-by-department/:department/:year', EmployeeController.getTotalEarningByDepartment);
+
+gateway: có thể lấy toàn bộ emp(cùng earning tương ứng) của toàn bộ 
+
+
+
+
+---------------------------------------
+
+Dự kiến FE
+- Trang chủ lấy api gồm tên phòng ban,tổng earning của phòng ban đó,năm hiện tại,năm trước đó
++ Để làm được cần 
+ ++ Ở Employee thì duyệt qua db và lấy ra các department hiện có
+ ++ Ở Payroll service lấy tổng thu nhập của phòng ban của năm hiện tại,và tổng thu nhập của phòng ban năm trước đó -> chỉ cần thiết kế method duy nhất cho phép trả data về theo năm
+ ++ Ở gateway thì call api của employee service lấy danh sách các phòng ban,sau khi có đc list phòng ban từ employee service thì lấy từng tên phòng ban gọi api và lấy tổng của từng phòng ban.Xử lý dữ liệu và trả về client kết quả như sau:
+ [{
+    department,earningCurrent,earningLastYear
+ }] 
+
+- Trang tiếp theo là trang chi tiết nhân viên show earning và:
+Gồm:EmployeeId,fullName,gender,department,employmentType,shareHolder,earning, vacationDaysAccumulated,
+  vacationDaysTaken.
+
+{  _id?: ObjectId;
+ 
+  gender: string;
+  ethnicity: string;
+  shareHolder: boolean;
+  department: string;
+  employmentType: string;
+  hireDate: Date;
+  birthday: Date;
+  vacationDaysAccumulated: number;
+  vacationDaysTaken: number;
+  benefitPlan: string;}
+

@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
 import { EmployeeSchema } from '~/models/schemas/employeesGW.schema';
 import { PayrollSchema } from '~/models/schemas/payrollsGW.schemas';
-import { addNewEmployee, getEmployees, getEmployeeById, getEmployeesByDepartment } from '~/utils/employees.axios';
+import {
+  addNewEmployee,
+  getEmployees,
+  getEmployeeById,
+  getEmployeesByDepartment,
+  getDepartmentList
+} from '~/utils/employees.axios';
 import {
   addPayroll,
   getPayrolls,
@@ -63,6 +69,11 @@ class EmployeeController {
     const department = tempDepartment.toLowerCase();
     const payroll = await getTotalPayrollsByDepartment(department, year);
     res.json({ department: department, year: year, totalEarnings: payroll.totalEarnings });
+  }
+
+  async getDepartmentList(req: Request, res: Response) {
+    const departmentList = await getDepartmentList();
+    res.json(departmentList);
   }
 }
 

@@ -6,6 +6,7 @@ const router = Router();
 router.post('/', EmployeeController.createEmployee);
 router.get('/', EmployeeController.getEmployee);
 router.get('/:id/:year', EmployeeController.getEmployeeAndPayrollById);
+router.get('/department-list', EmployeeController.getDepartmentList);
 router.get('/get-by-department/:department/:year', EmployeeController.getEmployeesAndPayrollsByDepartment);
 router.get('/get-total-by-department/:department/:year', EmployeeController.getTotalEarningByDepartment);
 export default router;

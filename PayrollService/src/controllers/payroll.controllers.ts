@@ -5,14 +5,16 @@ import payrollService from '~/services/payroll.services';
 
 class PayrollController {
   async getALlPayrolls(req: Request, res: Response) {
-    const payrolls = await payrollService.getAllPayrolls();
+    const { year: tempYear } = req.params;
+    const year = parseInt(tempYear);
+    const payrolls = await payrollService.getAllPayrolls(year);
     res.json(payrolls);
   }
 
   async getPayrollsByEmployeeId(req: Request, res: Response) {
-    const { employeeId: tempId, year: tempYear } = req.params;
-    const year = parseInt(tempYear.slice(1));
-    const employeeId = tempId.slice(1);
+    const { employeeId, year: tempYear } = req.params;
+    // const year = parseInt(tempYear.slice(1));
+    const year = parseInt(tempYear);
     console.log(employeeId, year);
     const payrolls = await payrollService.getPayrollsByEmployeeId(employeeId, year);
     res.json(payrolls);
@@ -24,18 +26,18 @@ class PayrollController {
   }
 
   async getTotalEarningByDepartment(req: Request, res: Response) {
-    const { department: tempDepartment, year: tempYear } = req.params;
-    const department = tempDepartment.slice(1);
-    const year = parseInt(tempYear.slice(1));
+    const { department, year: tempYear } = req.params;
+    // const department = tempDepartment.slice(1);
+    const year = parseInt(tempYear);
     const totalEarnings = await payrollService.getTotalEarningByDepartment(department, year);
 
     res.json({ department, year, totalEarnings });
   }
 
   async getEarningsByDepartment(req: Request, res: Response) {
-    const { department: tempDepartment, year: tempYear } = req.params;
-    const department = tempDepartment.slice(1);
-    const year = parseInt(tempYear.slice(1));
+    const { department, year: tempYear } = req.params;
+    // const department = tempDepartment.slice(1);
+    const year = parseInt(tempYear);
     const earningList: PayrollInterface[] = await payrollService.getEaringByDepartment(department, year);
 
     res.json(earningList);

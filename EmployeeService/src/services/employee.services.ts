@@ -12,7 +12,11 @@ class EmployeeService {
   }
 
   async getEmployeeById(id: string): Promise<Employee | null> {
-    return await databaseService.employees.findOne({ _id: new ObjectId(id.slice(1)) });
+    return await databaseService.employees.findOne({ _id: new ObjectId(id) });
+  }
+
+  async getDepartmentList(): Promise<string[]> {
+    return await databaseService.employees.distinct('department');
   }
 
   async createEmployee(data: Partial<Employee>): Promise<Employee> {
@@ -24,11 +28,15 @@ class EmployeeService {
   }
 
   async updateEmployee(id: string, data: Partial<Employee>): Promise<Employee | null> {
-    const employee = await databaseService.employees.findOne({ _id: new ObjectId(id.slice(1)) });
+    const employee = await databaseService.employees.findOne({ _id: new ObjectId(id) });
     const updateEmp = { ...employee, ...data };
-    const result = await databaseService.employees.updateOne({ _id: new ObjectId(id.slice(1)) }, { $set: data });
+    const result = await databaseService.employees.updateOne({ _id: new ObjectId(id) }, { $set: data });
     if (result.matchedCount === 0) return null;
     return await this.getEmployeeById(id);
+  }
+
+  async getEmployeeByEthnicity(ethnicity: string): Promise<Employee[]> {
+    return await databaseService.employees.find({ ethnicity: ethnicity }).toArray();
   }
 }
 

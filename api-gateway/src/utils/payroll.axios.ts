@@ -8,7 +8,7 @@ export const addPayroll = async (data: PayrollSchema) => {
 };
 
 export const getPayrolls = async () => {
-  const response = await axios.get(`${path.payroll}/payrolls`);
+  const response = await axios.get(`${path.payroll}/payrolls/payrolls`);
   return response.data;
 };
 

@@ -3,8 +3,8 @@ import databaseService from '~/services/databases.services';
 import Payroll, { PayrollInterface } from '~/models/schemas/payroll.schema';
 
 class PayrollService {
-  async getAllPayrolls(): Promise<PayrollInterface[]> {
-    const payrolls = await databaseService.payrolls.find().toArray();
+  async getAllPayrolls(year: number): Promise<PayrollInterface[]> {
+    const payrolls = await databaseService.payrolls.find({ year: year }).toArray();
     return payrolls;
   }
 

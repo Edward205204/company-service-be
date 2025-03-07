@@ -5,6 +5,7 @@ export default class Employee {
   name: string;
   gender: string;
   ethnicity: string;
+  shareHolder: boolean;
   department: string;
   employmentType: string;
   hireDate: Date;
@@ -19,6 +20,7 @@ export default class Employee {
     this.name = data.name;
     this.gender = data.gender || '';
     this.ethnicity = data.ethnicity || '';
+    this.shareHolder = data.shareHolder || false;
     this.department = data.department;
     this.employmentType = data.employmentType || 'full-time';
     this.hireDate = data.hireDate || new Date();
