@@ -63,7 +63,7 @@ employee: có thể lấy dữ liệu của toàn bộ employee
           có thể thêm mới một nhân viên
           có thể sửa đổi thông tin một nhân viên()
 
----
+--------------------
 
 payroll
 router.get('/', payrollController.getALlPayrolls);
@@ -108,7 +108,6 @@ Gồm:EmployeeId,fullName,gender,department,employmentType,shareHolder,earning, 
   vacationDaysTaken.
 
 {  _id?: ObjectId;
- 
   gender: string;
   ethnicity: string;
   shareHolder: boolean;
@@ -118,5 +117,6 @@ Gồm:EmployeeId,fullName,gender,department,employmentType,shareHolder,earning, 
   birthday: Date;
   vacationDaysAccumulated: number;
   vacationDaysTaken: number;
-  benefitPlan: string;}
+  benefitPlan: string;
+  }
 
