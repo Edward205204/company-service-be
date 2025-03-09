@@ -1,21 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
 class PayrollMiddleware {
-  yearValidation(req: Request, res: Response, next: NextFunction) {
-    let { year } = req.params;
-
-    if (year.startsWith(':')) {
-      year = year.slice(1);
-    }
-
-    if (year) {
-      year = new Date().getFullYear().toString();
-      console.log('year', year);
-    }
-
-    req.params.year = year;
-    next();
-  }
   empIdValidation(req: Request, res: Response, next: NextFunction) {
     let { employeeId } = req.params;
     if (employeeId.startsWith(':')) {

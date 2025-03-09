@@ -4,24 +4,18 @@ import payrollsMiddlewares from '~/middlewares/payrolls.middlewares';
 
 const router = Router();
 
-router.get('/:year', payrollsMiddlewares.yearValidation, payrollController.getALlPayrolls);
-router.post('/', payrollController.createPayroll);
+// router.post('/', payrollController.createPayroll);
+router.get('/', payrollController.getAllPayrolls);
+
+router.get('/:employeeId', payrollsMiddlewares.empIdValidation, payrollController.getPayrollsByEmployeeId);
 router.get(
-  '/:employeeId/:year',
-  payrollsMiddlewares.empIdValidation,
-  payrollsMiddlewares.yearValidation,
-  payrollController.getPayrollsByEmployeeId
-);
-router.get(
-  '/department/:department/:year',
-  payrollsMiddlewares.yearValidation,
+  '/department/:department',
   payrollsMiddlewares.departmentValidation,
   payrollController.getEarningsByDepartment
 );
 router.get(
-  '/total-department-earning/:department/:year',
+  '/total-department-earning/:department',
   payrollsMiddlewares.departmentValidation,
-  payrollsMiddlewares.yearValidation,
   payrollController.getTotalEarningByDepartment
 );
 

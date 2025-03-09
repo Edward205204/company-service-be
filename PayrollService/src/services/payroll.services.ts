@@ -3,40 +3,39 @@ import databaseService from '~/services/databases.services';
 import Payroll, { PayrollInterface } from '~/models/schemas/payroll.schema';
 
 class PayrollService {
-  async getAllPayrolls(year: number): Promise<PayrollInterface[]> {
-    const payrolls = await databaseService.payrolls.find({ year: year }).toArray();
+  async getAllPayrolls(): Promise<PayrollInterface[]> {
+    const payrolls = await databaseService.payrolls.find({}).toArray();
     return payrolls;
   }
 
-  async getPayrollsByEmployeeId(employeeId: string, year: number): Promise<PayrollInterface | string> {
+  async getPayrollsByEmployeeId(employeeId: string): Promise<PayrollInterface | string> {
     const payroll = await databaseService.payrolls.findOne({
-      employeeId: employeeId,
-      year: year
+      employeeId: employeeId
     });
 
     return payroll || 'No payroll found';
   }
 
-  async createPayroll(data: PayrollInterface): Promise<PayrollInterface> {
-    const payroll = new Payroll(data);
-    const result = await databaseService.payrolls.insertOne({
-      ...payroll,
-      department: payroll.department.toLowerCase()
-    });
-    payroll._id = result.insertedId;
-    return payroll;
-  }
+  // async createPayroll(data: PayrollInterface): Promise<PayrollInterface> {
+  // const payroll = new Payroll(data);
+  // const result = await databaseService.payrolls.insertOne({
+  //   ...payroll,
+  //   department: payroll.department.toLowerCase()
+  // });
+  // payroll._id = result.insertedId;
+  // return payroll;
+  // }
 
-  async getEaringByDepartment(department: string, year: number): Promise<PayrollInterface[]> {
-    const payrolls = await databaseService.payrolls.find({ department, year }).toArray();
+  async getEaringByDepartment(department: string): Promise<PayrollInterface[]> {
+    const payrolls = await databaseService.payrolls.find({ department }).toArray();
     return payrolls;
   }
 
-  async getTotalEarningByDepartment(department: string, year: number): Promise<number> {
+  async getTotalEarningByDepartment(department: string): Promise<number> {
     const total = await databaseService.payrolls
       .aggregate([
         {
-          $match: { department: department, year: year }
+          $match: { department: department }
         },
         {
           $group: {
@@ -46,7 +45,6 @@ class PayrollService {
         }
       ])
       .toArray();
-    console.log(total);
     return total.length > 0 ? total[0].totalEarnings : 0;
   }
 }

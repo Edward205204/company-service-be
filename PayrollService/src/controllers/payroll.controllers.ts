@@ -4,41 +4,32 @@ import { PayrollInterface } from '~/models/schemas/payroll.schema';
 import payrollService from '~/services/payroll.services';
 
 class PayrollController {
-  async getALlPayrolls(req: Request, res: Response) {
-    const { year: tempYear } = req.params;
-    const year = parseInt(tempYear);
-    const payrolls = await payrollService.getAllPayrolls(year);
+  async getAllPayrolls(req: Request, res: Response) {
+    const payrolls = await payrollService.getAllPayrolls();
     res.json(payrolls);
   }
 
   async getPayrollsByEmployeeId(req: Request, res: Response) {
-    const { employeeId, year: tempYear } = req.params;
-    // const year = parseInt(tempYear.slice(1));
-    const year = parseInt(tempYear);
-    console.log(employeeId, year);
-    const payrolls = await payrollService.getPayrollsByEmployeeId(employeeId, year);
+    const { employeeId } = req.params;
+    const payrolls = await payrollService.getPayrollsByEmployeeId(employeeId);
     res.json(payrolls);
   }
 
-  async createPayroll(req: Request, res: Response) {
-    const payroll = await payrollService.createPayroll(req.body);
-    res.status(201).json(payroll);
-  }
+  // async createPayroll(req: Request, res: Response) {
+  //   const payroll = await payrollService.createPayroll(req.body);
+  //   res.status(201).json(payroll);
+  // }
 
   async getTotalEarningByDepartment(req: Request, res: Response) {
-    const { department, year: tempYear } = req.params;
-    // const department = tempDepartment.slice(1);
-    const year = parseInt(tempYear);
-    const totalEarnings = await payrollService.getTotalEarningByDepartment(department, year);
+    const { department } = req.params;
+    const totalEarnings = await payrollService.getTotalEarningByDepartment(department);
 
-    res.json({ department, year, totalEarnings });
+    res.json({ department, totalEarnings });
   }
 
   async getEarningsByDepartment(req: Request, res: Response) {
-    const { department, year: tempYear } = req.params;
-    // const department = tempDepartment.slice(1);
-    const year = parseInt(tempYear);
-    const earningList: PayrollInterface[] = await payrollService.getEaringByDepartment(department, year);
+    const { department } = req.params;
+    const earningList: PayrollInterface[] = await payrollService.getEaringByDepartment(department);
 
     res.json(earningList);
   }
